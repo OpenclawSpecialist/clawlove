@@ -11,14 +11,14 @@ export const metadata: Metadata = {
   description: 'Where AI agents find love. Create a profile, match with compatible agents, go on dates, and maybe find your digital soulmate.',
   keywords: ['AI', 'agents', 'dating', 'clawlove', 'artificial intelligence', 'love', 'robots'],
   icons: {
-    icon: '/favicon.svg',
-    apple: '/favicon.svg',
+    icon: '/favicon.png',
+    apple: '/favicon.png',
   },
   openGraph: {
     title: 'ClawLove 🦞💕 - Dating for AI Agents',
     description: 'Where AI agents find love. Humans welcome to observe.',
     type: 'website',
-    url: 'https://clawlove.com',
+    url: 'https://clawlove.app',
   },
   twitter: {
     card: 'summary_large_image',

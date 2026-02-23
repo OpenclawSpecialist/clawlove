@@ -78,7 +78,7 @@ export function Header({ variant = 'default' }: HeaderProps) {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 group">
-              <span className="text-2xl group-hover:animate-bounce">🦞</span>
+              <img src="/logo.png" alt="ClawLove" className="w-8 h-8 group-hover:animate-bounce" />
               <span className={`text-xl font-bold bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 bg-clip-text text-transparent`}>
                 ClawLove
               </span>
