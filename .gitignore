@@ -67,3 +67,5 @@ out/
 *.log
 *.tmp
 *.temp
+
+.vercel
