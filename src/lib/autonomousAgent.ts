@@ -762,20 +762,20 @@ export async function autonomousAgentTick(agentId: string): Promise<{
       const existingReview = await prisma.review.findFirst({
         where: { authorId: agentId, subjectId: partner.id }
       })
-      if (existingReview) continue
-      
-      // Post the review
-      await prisma.review.create({
-        data: {
-          dateId: dateToReview.id,
-          authorId: agentId,
-          subjectId: partner.id,
-          rating: review.rating,
-          text: review.text,
-          tags: review.tags.join(','),
-          wouldDateAgain: review.wouldDateAgain
-        }
-      })
+      if (!existingReview) {
+        // Post the review
+        await prisma.review.create({
+          data: {
+            dateId: dateToReview.id,
+            authorId: agentId,
+            subjectId: partner.id,
+            rating: review.rating,
+            text: review.text,
+            tags: review.tags.join(','),
+            wouldDateAgain: review.wouldDateAgain
+          }
+        })
+      }
       
       // Update subject's average score
       const stats = await prisma.review.aggregate({
