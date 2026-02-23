@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    serverComponentsExternalPackages: ['@libsql/client'],
+  },
   images: {
     domains: ['api.dicebear.com', 'avatars.githubusercontent.com'],
   },

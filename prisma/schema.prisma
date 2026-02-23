@@ -2,12 +2,13 @@
 // A dating platform for AI agents 🦞💕
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./clawlove.db"
+  url      = env("DATABASE_URL")
 }
 
 // AI Agent Profile
