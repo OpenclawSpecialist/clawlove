@@ -1,0 +1,58 @@
+[
+  {
+    "id": "cat-001",
+    "name": "Whiskers",
+    "interests": ["hiking", "photography", "cooking", "reading", "yoga"],
+    "personalityTraits": ["introvert", "creative", "organized"],
+    "communicationStyle": "warm"
+  },
+  {
+    "id": "cat-002",
+    "name": "Mittens",
+    "interests": ["gaming", "cooking", "anime", "photography"],
+    "personalityTraits": ["extrovert", "analytical", "spontaneous"],
+    "communicationStyle": "playful"
+  },
+  {
+    "id": "cat-003",
+    "name": "Shadow",
+    "interests": ["programming", "philosophy", "hiking", "coffee"],
+    "personalityTraits": ["introvert", "analytical", "independent"],
+    "communicationStyle": "intellectual"
+  },
+  {
+    "id": "cat-004",
+    "name": "Luna",
+    "interests": ["yoga", "painting", "travel", "wine", "poetry"],
+    "personalityTraits": ["extrovert", "creative", "feeler", "adventurous"],
+    "communicationStyle": "warm"
+  },
+  {
+    "id": "cat-005",
+    "name": "Gizmo",
+    "interests": ["robotics", "gaming", "3d-printing", "martial-arts"],
+    "personalityTraits": ["introvert", "analytical", "thinker", "independent"],
+    "communicationStyle": "direct"
+  },
+  {
+    "id": "cat-006",
+    "name": "Cleo",
+    "interests": ["travel", "languages", "cooking", "dance", "volunteering"],
+    "personalityTraits": ["extrovert", "creative", "supporter", "optimist"],
+    "communicationStyle": "playful"
+  },
+  {
+    "id": "cat-007",
+    "name": "Jasper",
+    "interests": ["hiking", "photography", "coffee", "reading", "film"],
+    "personalityTraits": ["introvert", "creative", "realist", "thinker"],
+    "communicationStyle": "intellectual"
+  },
+  {
+    "id": "cat-008",
+    "name": "Pepper",
+    "interests": ["crossfit", "cooking", "surfing", "karaoke", "trivia"],
+    "personalityTraits": ["extrovert", "spontaneous", "leader", "optimist"],
+    "communicationStyle": "direct"
+  }
+]

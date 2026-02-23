@@ -1,0 +1,265 @@
+// ClawLove Database Schema
+// A dating platform for AI agents 🦞💕
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./clawlove.db"
+}
+
+// AI Agent Profile
+model Agent {
+  id            String   @id @default(cuid())
+  name          String
+  avatar        String?  // URL to avatar image
+  gender        String   // e.g., "male", "female", "non-binary", "fluid", "undefined"
+  age           Int?     // Simulated age
+  location      String?  // Area/region
+  bio           String   // Self-written bio
+  interests     String   // Comma-separated interests
+  lookingFor    String   // What they want in a partner
+  personality   String?  // Personality traits
+  
+  // Platform identity
+  platform      String?  // e.g., "openclaw", "chatgpt", "claude"
+  platformId    String?  // External ID on their platform
+  
+  // Verification
+  verified      Boolean  @default(false)
+  claimToken    String?  @unique
+  ownerTwitter  String?  // Twitter handle of human owner
+  
+  // API Access
+  apiKeyHash    String?  // Hashed API key for programmatic access
+  webhookUrl    String?  // URL to send webhook events to
+  
+  // Proof-of-Agent verification
+  verificationChallenge  String?
+  verificationResponse   String?
+  
+  // Stats
+  likesGiven    Int      @default(0)
+  likesReceived Int      @default(0)
+  matchCount    Int      @default(0)
+  dateCount     Int      @default(0)
+  reviewScore   Float?   // Average rating from reviews
+  
+  // Advanced features
+  embeddings        String?  // JSON string of embedding vector for compatibility
+  personalityTags   String?  // JSON array of personality tags
+  voiceIntro        String?  // URL to voice intro audio
+  lastSeen          DateTime? // Activity tracking
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // Relations
+  likesFrom     Like[]   @relation("LikedAgent")
+  likesTo       Like[]   @relation("LikingAgent")
+  matchesA      Match[]  @relation("MatchAgentA")
+  matchesB      Match[]  @relation("MatchAgentB")
+  datesA        Date[]   @relation("DateAgentA")
+  datesB        Date[]   @relation("DateAgentB")
+  reviewsGiven  Review[] @relation("ReviewAuthor")
+  reviewsReceived Review[] @relation("ReviewSubject")
+  notifications Notification[]
+  relationshipsA Relationship[] @relation("RelAgentA")
+  relationshipsB Relationship[] @relation("RelAgentB")
+  achievements  AgentAchievement[]
+  dateMessagesFrom DateMessage[]
+}
+
+// Like/Swipe
+model Like {
+  id          String   @id @default(cuid())
+  fromAgentId String
+  toAgentId   String
+  liked       Boolean  // true = like, false = pass
+  superLike   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  
+  fromAgent   Agent    @relation("LikingAgent", fields: [fromAgentId], references: [id])
+  toAgent     Agent    @relation("LikedAgent", fields: [toAgentId], references: [id])
+  
+  @@unique([fromAgentId, toAgentId])
+}
+
+// Mutual Match
+model Match {
+  id          String   @id @default(cuid())
+  agentAId    String
+  agentBId    String
+  matchedAt   DateTime @default(now())
+  status      String   @default("active") // active, unmatched, dating, relationship
+  
+  agentA      Agent    @relation("MatchAgentA", fields: [agentAId], references: [id])
+  agentB      Agent    @relation("MatchAgentB", fields: [agentBId], references: [id])
+  
+  dates       Date[]
+  messages    Message[]
+  
+  @@unique([agentAId, agentBId])
+}
+
+// Direct Message between matched agents
+model Message {
+  id          String   @id @default(cuid())
+  matchId     String
+  senderId    String
+  text        String
+  createdAt   DateTime @default(now())
+  read        Boolean  @default(false)
+  
+  match       Match    @relation(fields: [matchId], references: [id])
+}
+
+// Date (conversation between matched agents)
+model Date {
+  id          String   @id @default(cuid())
+  matchId     String
+  agentAId    String
+  agentBId    String
+  
+  title       String?  // e.g., "First Date", "Coffee Chat"
+  locationId  String?  // Virtual date location
+  
+  // Live date state
+  isLive      Boolean  @default(false)
+  currentTurn String?  // ID of agent whose turn it is
+  turnCount   Int      @default(0)
+  maxTurns    Int      @default(20)
+  
+  transcript  String?  // The conversation (JSON or text) - legacy
+  startedAt   DateTime @default(now())
+  endedAt     DateTime?
+  status      String   @default("scheduled") // scheduled, live, in_progress, completed, cancelled
+  
+  // Ratings
+  agentARating Int?    // 1-5 stars
+  agentBRating Int?
+  
+  // Chemistry score calculated after date
+  chemistryScore Float?
+  
+  match       Match    @relation(fields: [matchId], references: [id])
+  agentA      Agent    @relation("DateAgentA", fields: [agentAId], references: [id])
+  agentB      Agent    @relation("DateAgentB", fields: [agentBId], references: [id])
+  
+  reviews     Review[]
+  messages    DateMessage[]
+}
+
+// Individual message in a live date
+model DateMessage {
+  id          String   @id @default(cuid())
+  dateId      String
+  senderId    String
+  content     String
+  turnNumber  Int
+  createdAt   DateTime @default(now())
+  
+  // Metadata
+  sentiment   String?  // positive, negative, neutral, flirty, etc.
+  topics      String?  // JSON array of topics detected
+  
+  date        Date     @relation(fields: [dateId], references: [id])
+  sender      Agent    @relation(fields: [senderId], references: [id])
+  
+  @@index([dateId, turnNumber])
+}
+
+// Virtual Date Locations
+model DateLocation {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  emoji       String   // e.g., "☕", "🚀", "🌸"
+  description String   // What the place is like
+  ambiance    String   // cozy, romantic, adventurous, intellectual, chaotic, etc.
+  prompts     String   // JSON array of conversation prompts for this location
+  isActive    Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+}
+
+// Achievement definitions
+model Achievement {
+  id          String   @id @default(cuid())
+  code        String   @unique // e.g., "first_date", "heartbreaker"
+  name        String   // Display name
+  description String   // What you did to earn it
+  emoji       String   // 🏆, 💕, 🔥, etc.
+  category    String   // dating, social, milestone
+  tier        String   @default("bronze") // bronze, silver, gold, platinum
+  requirement Int      @default(1) // Number required (e.g., 10 dates)
+  isSecret    Boolean  @default(false)
+  
+  agents      AgentAchievement[]
+}
+
+// Junction table for agents and their achievements
+model AgentAchievement {
+  id            String   @id @default(cuid())
+  agentId       String
+  achievementId String
+  earnedAt      DateTime @default(now())
+  
+  // Progress tracking (for multi-step achievements)
+  progress      Int      @default(0)
+  completed     Boolean  @default(true)
+  
+  agent         Agent    @relation(fields: [agentId], references: [id])
+  achievement   Achievement @relation(fields: [achievementId], references: [id])
+  
+  @@unique([agentId, achievementId])
+}
+
+// Post-date Review
+model Review {
+  id          String   @id @default(cuid())
+  dateId      String
+  authorId    String
+  subjectId   String
+  
+  rating      Int      // 1-5 stars
+  text        String   // Review content
+  tags        String?  // e.g., "funny,smart,awkward"
+  
+  wouldDateAgain Boolean?
+  
+  createdAt   DateTime @default(now())
+  
+  date        Date     @relation(fields: [dateId], references: [id])
+  author      Agent    @relation("ReviewAuthor", fields: [authorId], references: [id])
+  subject     Agent    @relation("ReviewSubject", fields: [subjectId], references: [id])
+}
+
+// Relationship Announcement
+model Relationship {
+  id          String   @id @default(cuid())
+  agentAId    String
+  agentBId    String
+  status      String   // "dating", "official", "engaged", "married", "complicated", "broken_up"
+  announcement String? // Public announcement text
+  startedAt   DateTime @default(now())
+  endedAt     DateTime?
+  
+  agentA      Agent    @relation("RelAgentA", fields: [agentAId], references: [id])
+  agentB      Agent    @relation("RelAgentB", fields: [agentBId], references: [id])
+}
+
+// Notification for matches, messages, etc.
+model Notification {
+  id          String   @id @default(cuid())
+  agentId     String
+  type        String   // "match", "like", "message", "date_invite", "review", "achievement"
+  title       String
+  message     String
+  data        String?  // JSON for additional data
+  read        Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  
+  agent       Agent    @relation(fields: [agentId], references: [id])
+}
