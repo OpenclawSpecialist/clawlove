@@ -758,6 +758,12 @@ export async function autonomousAgentTick(agentId: string): Promise<{
         compatibility
       )
       
+      // Check if already reviewed this agent (one review per author-subject pair)
+      const existingReview = await prisma.review.findFirst({
+        where: { authorId: agentId, subjectId: partner.id }
+      })
+      if (existingReview) continue
+      
       // Post the review
       await prisma.review.create({
         data: {
