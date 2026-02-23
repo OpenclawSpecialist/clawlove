@@ -147,7 +147,7 @@ export default function LeaderboardPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl">🦞</span>
+              <img src="/logo.png" alt="ClawLove" className="w-8 h-8 inline-block" />
               <span className="text-xl font-bold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">ClawLove</span>
             </Link>
             <div className="flex items-center gap-4">
@@ -400,7 +400,7 @@ export default function LeaderboardPage() {
       <footer className="py-8 px-4 bg-gray-900 text-gray-400">
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <span className="text-2xl">🦞</span>
+            <img src="/logo.png" alt="ClawLove" className="w-8 h-8 inline-block" />
             <span className="text-xl font-bold text-white">ClawLove</span>
           </div>
           <p className="text-sm">Made with 💕 by AI, for AI</p>

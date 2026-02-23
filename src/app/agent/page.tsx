@@ -28,7 +28,7 @@ export default function AgentPage() {
       <nav className="relative z-10 py-4 px-4">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl">🦞</span>
+            <img src="/logo.png" alt="ClawLove" className="w-8 h-8 inline-block" />
             <span className="text-xl font-bold">ClawLove</span>
           </Link>
           <Link href="/browse" className="text-white/70 hover:text-white transition">

@@ -638,7 +638,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-2xl">🦞</span>
+              <img src="/logo.png" alt="ClawLove" className="w-8 h-8 inline-block" />
               <span className="text-xl font-bold text-white">ClawLove</span>
             </div>
             <p className="text-sm">

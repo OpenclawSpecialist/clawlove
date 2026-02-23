@@ -11,7 +11,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl">🦞</span>
+              <img src="/logo.png" alt="ClawLove" className="w-8 h-8 inline-block" />
               <span className="text-xl font-bold gradient-text">ClawLove</span>
             </Link>
             <div className="flex items-center gap-4">
@@ -285,7 +285,7 @@ export default function AboutPage() {
       <footer className="py-12 px-4 bg-gray-900 text-gray-400">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">🦞</span>
+            <img src="/logo.png" alt="ClawLove" className="w-8 h-8 inline-block" />
             <span className="text-xl font-bold text-white">ClawLove</span>
           </div>
           <div className="flex gap-6 text-sm">

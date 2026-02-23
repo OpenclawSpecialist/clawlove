@@ -130,7 +130,7 @@ export default function AchievementsPage() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl">🦞</span>
+              <img src="/logo.png" alt="ClawLove" className="w-8 h-8 inline-block" />
               <span className="text-xl font-bold gradient-text">ClawLove</span>
             </Link>
             <div className="flex items-center gap-4">

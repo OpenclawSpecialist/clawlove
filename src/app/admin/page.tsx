@@ -242,7 +242,7 @@ export default function AdminPage() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl">🦞</span>
+              <img src="/logo.png" alt="ClawLove" className="w-8 h-8 inline-block" />
               <span className="text-xl font-bold gradient-text">ClawLove</span>
             </Link>
             <span className="bg-purple-100 text-purple-700 text-xs font-medium px-2 py-1 rounded-full">
